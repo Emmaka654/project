@@ -8,19 +8,35 @@ import java.io.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader("input.txt"));
-        PrintWriter out = new PrintWriter(new FileWriter("output.txt"));
-        PrefixExpressionOperation prefixExpressionOperation = PrefixExpressionOperation.getInstance("Calculation");
-        // Create an expression
-        String s = "1 + 2 + 4 * 10 - 3";
-        // Check the expression for errors
-        try {
-            prefixExpressionOperation.check(s);
-        } catch (WrongFormat e) {
-            throw new RuntimeException(e);
+
+        solvePlainText("input.txt", "output.txt");
+        
+    }
+
+    private static void solvePlainText(String input, String output) throws IOException {
+        PrintWriter out = new PrintWriter(new FileWriter(output));
+        File file = new File(input);
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line;
+            String str = null;
+            while ((line = br.readLine()) != null) {
+                PrefixExpressionOperation prefixExpressionOperation = PrefixExpressionOperation.getInstance("Calculation");
+                String[] masOfLines = line.split(" ");
+                for (int i = 0; i < masOfLines.length; i++) {
+                    if (Character.isDigit(masOfLines[i].charAt(0))) {
+                        try {
+                            prefixExpressionOperation.check(masOfLines[i]);
+                        } catch (WrongFormat e) {
+                            throw new RuntimeException(e);
+                        }
+                        CalculationNumberResults calculation = prefixExpressionOperation.calculation(masOfLines[i]);
+                        out.println(calculation);
+                    }
+                }
+                out.flush();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        // Start calculating results
-        CalculationNumberResults calculation = prefixExpressionOperation.calculation(s);
-        System.out.println(calculation);
     }
 }
