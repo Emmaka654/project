@@ -46,7 +46,7 @@ public class XML {
                             } catch (WrongFormat e) {
                                 throw new RuntimeException(e);
                             }
-                            CalculationNumberResults calculation = prefixExpressionOperation.calculation(str);
+                            CalculationNumberResults calculation = getCalculationResults(prefixExpressionOperation, str);
                             writer.writeCharacters(String.valueOf(calculation));
                         }
                     }
@@ -56,5 +56,9 @@ public class XML {
         writer.writeEndElement();
         writer.writeEndDocument();
         writer.flush();
+    }
+
+    public static CalculationNumberResults getCalculationResults(PrefixExpressionOperation prefixExpressionOperation, String str) {
+        return prefixExpressionOperation.calculation(str);
     }
 }

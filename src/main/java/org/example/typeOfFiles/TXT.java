@@ -16,14 +16,14 @@ public class TXT {
             while ((line = br.readLine()) != null) {
                 PrefixExpressionOperation prefixExpressionOperation = PrefixExpressionOperation.getInstance("Calculation");
                 String[] masOfLines = line.split(" ");
-                for (int i = 0; i < masOfLines.length; i++) {
-                    if (Character.isDigit(masOfLines[i].charAt(0))) {
+                for (String masOfLine : masOfLines) {
+                    if (Character.isDigit(masOfLine.charAt(0))) {
                         try {
-                            prefixExpressionOperation.check(masOfLines[i]);
+                            prefixExpressionOperation.check(masOfLine);
                         } catch (WrongFormat e) {
                             throw new RuntimeException(e);
                         }
-                        CalculationNumberResults calculation = prefixExpressionOperation.calculation(masOfLines[i]);
+                        CalculationNumberResults calculation = getCalculationNumberResults(prefixExpressionOperation, masOfLine);
                         out.println(calculation);
                     }
                 }
@@ -32,6 +32,10 @@ public class TXT {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static CalculationNumberResults getCalculationNumberResults(PrefixExpressionOperation prefixExpressionOperation, String masOfLines) {
+        return  prefixExpressionOperation.calculation(masOfLines);
     }
 
 }

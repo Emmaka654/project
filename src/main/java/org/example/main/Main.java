@@ -1,11 +1,11 @@
 package org.example.main;
 
-import org.apache.logging.log4j.core.parser.ParseException;
-import org.example.zipAndEncryption.Encryption;
-import org.example.zipAndEncryption.JAR;
+import core.calculation.number.PrefixExpressionOperation;
 import org.example.typeOfFiles.JSON;
 import org.example.typeOfFiles.TXT;
 import org.example.typeOfFiles.XML;
+import org.example.zipAndEncryption.Encryption;
+import org.example.zipAndEncryption.JAR;
 import org.example.zipAndEncryption.ZIP;
 import org.json.JSONException;
 import org.xml.sax.SAXException;
@@ -22,8 +22,10 @@ import java.util.Scanner;
 
 
 public class Main {
-    public static void main(String[] args) throws IOException, XMLStreamException, ParserConfigurationException, SAXException, NoSuchAlgorithmException, SignatureException, NoSuchProviderException, InvalidKeyException, JSONException, ParseException, InvalidKeySpecException {
+    public static void main(String[] args) throws IOException, XMLStreamException, ParserConfigurationException, SAXException, NoSuchAlgorithmException, SignatureException, NoSuchProviderException, InvalidKeyException, JSONException, InvalidKeySpecException, org.json.simple.parser.ParseException {
         Scanner scanner = new Scanner(System.in);
+        PrefixExpressionOperation prefixExpressionOperation = PrefixExpressionOperation.getInstance("Calculation");
+        System.out.println(TXT.getCalculationNumberResults(prefixExpressionOperation, "12+56*14").toString());
         System.out.println("Is the input file zipped? (yes/no)");
         if (scanner.nextLine().equals("yes")) {
             System.out.println("Good! Zip or jar? (zip//jar)");
